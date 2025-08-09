@@ -15,7 +15,7 @@ namespace WebAsp.Controllers
         public async Task<IActionResult> Index()
         {
             var allProducers = await _context.Cinemas.ToListAsync();
-            return View();
+            return View(allProducers);
         }
     }
 }

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebAsp.Models.Movie>
+
+@{
+    ViewData["Title"] = "Movies List";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    @foreach (var movie in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <img src="@movie.ImageURL" class="card-img-top" alt="@movie.Name" />
+                <div class="card-body">
+                    <h5 class="card-title">@movie.Name</h5>
+                    <p class="card-text">@movie.Description</p>
+                    <p><strong>Cinema:</strong> @movie.Cinema?.Name</p>
+                    <p><strong>Category:</strong> @movie.MovieCategory</p>
+                    <p><strong>Start Date:</strong> @movie.StartDate.ToString("dd MMM yyyy")</p>
+                    <p><strong>End Date:</strong> @movie.EndDate.ToString("dd MMM yyyy")</p>
+                    <p>
+                        <strong>Status:</strong>
+                        @{
+                            var now = DateTime.Now;
+                            if (now >= movie.StartDate && now <= movie.EndDate)
+                            {
+                                <span class="badge bg-success">AVAILABLE</span>
+                            }
+                            else if (now > movie.EndDate)
+                            {
+                                <span class="badge bg-danger">EXPIRED</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-primary">UPCOMING</span>
+                            }
+                        }
+                    </p>
+                    <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-primary">Details</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
