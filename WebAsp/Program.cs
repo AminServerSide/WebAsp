@@ -1,13 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using WebAsp.Data;
+using WebAsp.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")) // Ensure this matches appsettings.json
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"))
            .EnableSensitiveDataLogging(false)); // Disable sensitive data logging in production
 
+builder.Services.AddScoped<IActorsService, ActorsService>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
